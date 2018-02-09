@@ -19,10 +19,18 @@
   opacity: 0.5;
 }
 
+.Display__name {
+  margin-top: 10px;
+  margin-left: 10px;
+
+  font-weight: 300; 
+}
 .Message__text {
-  position: absolute;
+  /*position: absolute;
   bottom: 10px;
-  left: 10px;
+  left: 10px;*/
+  margin-top: 10px;
+  margin-left: 35px;
 }
 
 .Message__edit {

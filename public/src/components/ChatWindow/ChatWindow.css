@@ -48,3 +48,9 @@ input {
   outline: none;
 
 }
+
+.userNameInput {
+  float: right;
+
+  width: 20%;
+}

@@ -13,13 +13,15 @@ export default class ChatWindow extends Component {
     super();
     this.state = {
       messages: [],
-      text: ''
+      text: '',
+      user: ''
     };
 
     this.handleChange = this.handleChange.bind( this );
     this.createMessage = this.createMessage.bind( this );
     this.editMessage = this.editMessage.bind( this );
     this.removeMessage = this.removeMessage.bind( this );
+    this.addUserName = this.addUserName.bind( this );
   }
 
   componentDidMount() {
@@ -32,10 +34,14 @@ export default class ChatWindow extends Component {
     this.setState({ text: event.target.value });
   }
 
+  addUserName( event ) {
+    this.setState({ user: event.target.value })
+  }
+
   createMessage( event ) {
-    const { text } = this.state;
+    const { text, user } = this.state;
     if ( event.key === "Enter" && text.length !== 0 ) {
-      axios.post( url, { text, time: dateCreator() } ).then( response => {
+      axios.post( url, { text, time: dateCreator(), user } ).then( response => {
         this.setState({ messages: response.data });
       });
 
@@ -63,7 +69,13 @@ export default class ChatWindow extends Component {
           <div id="ChatWindow__messagesChildContainer">
             {
               this.state.messages.map( message => (
-                <Message id={ message.id} key={ message.id } text={ message.text } time={ message.time } edit={ this.editMessage } remove={ this.removeMessage } />
+                <Message id={ message.id} 
+                        key={ message.id } 
+                        text={ message.text } 
+                        time={ message.time } 
+                        edit={ this.editMessage }
+                        user={ message.user } 
+                        remove={ this.removeMessage } />
               ))
             }
           </div>
@@ -74,6 +86,10 @@ export default class ChatWindow extends Component {
                  onChange={ this.handleChange }
                  value={ this.state.text }
           />
+          <input className="userNameInput"placeholder="UserName"
+                  onChange={this.addUserName}
+                  onKeyPress={ this.createMessage }
+                  value={ this.state.user }/>
         </div>
       </div>
     )
